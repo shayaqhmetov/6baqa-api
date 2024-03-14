@@ -9,17 +9,20 @@ import {
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDTO } from './dtos/create-post.dto';
+import { Public } from 'src/decarators';
 
 @Controller('posts')
 export class PostsController {
   constructor(private postsService: PostsService) { }
 
   @Get()
+  @Public()
   async findAll() {
     return await this.postsService.findAll();
   }
 
   @Get(':id')
+  @Public()
   async findOne(@Param('id') id: string) {
     return await this.postsService.findOne(id);
   }

@@ -11,11 +11,13 @@ import { CreateCategoryDTO } from './dtos/create-category.dto';
 import { UpdateCategoryDTO } from './dtos/update-category.dto';
 import { CategoriesService } from './categories.service';
 import { Category } from './interfaces/category.interface';
+import { Public } from 'src/decarators';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) { }
 
+  @Public()
   @Get()
   async findAll(): Promise<Category[]> {
     return await this.categoriesService.findAll();

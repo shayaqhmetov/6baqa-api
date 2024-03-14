@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Post } from './interfaces/post.interface';
 import { CreatePostDTO } from './dtos/create-post.dto';
+import { ErrorMessages } from 'src/constants';
 
 @Injectable()
 export class PostsService {
@@ -30,9 +31,18 @@ export class PostsService {
 
   async create(createPostDto: CreatePostDTO) {
     try {
-      const post = new this.postModel(createPostDto);
+      const post = new this.postModel({
+        ...createPostDto,
+        slug: createPostDto.title.toLowerCase().split(' ').join('-'),
+      });
       return await post.save();
     } catch (error) {
+      if (error.code === 11000) {
+        throw new HttpException(
+          ErrorMessages.duplicated_post,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

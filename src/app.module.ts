@@ -7,6 +7,8 @@ import { AppService } from './app.service';
 import { CategoriesModule } from './categories/categories.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { PostsModule } from './posts/posts.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { PostsModule } from './posts/posts.module';
     }),
     CategoriesModule,
     PostsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
